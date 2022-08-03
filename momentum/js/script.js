@@ -109,7 +109,6 @@ async function getWeather() {
     const url = `https://api.openweathermap.org/data/2.5/weather?q=${city.value}&lang=ru&appid=6482b58158f95b17d9dce830a81efd17&units=metric`;
     const res = await fetch(url);
     const data = await res.json();
-    console.log(data)
     if (data.cod === '404' || data.cod === '400') {
         weatherIcon.className = 'weather-icon owf'
         weatherError.textContent = `Error! city not found for '${city.value}'!`;
@@ -139,17 +138,29 @@ window.addEventListener('load', () => {
 
 // ------------quotes--------------
 
-function getRandomQuote() {
-
-}
-
+const quote = document.querySelector('.quote');
+const author = document.querySelector('.author');
+const changeQuote = document.querySelector('.change-quote');
+let rep;
 
 async function getQuotes() {  
     const quotes = 'js/data.json';
     const res = await fetch(quotes);
     const data = await res.json(); 
-
-    console.log(data.length);
+    let numberQuote = getRandomNum(data.length - 2);
+    if (numberQuote === rep) { 
+        if (numberQuote < data.length) {
+            numberQuote += 1;
+        } else {
+            numberQuote -= 1;
+        }
+    }
+    quote.textContent = `"${data[numberQuote].text}"`;
+    author.textContent = data[numberQuote].author;
+    rep = numberQuote;
 }
 
 getQuotes();
+
+changeQuote.addEventListener('click', getQuotes)
+
