@@ -1,10 +1,10 @@
+// -------------------date, greeting------------------------------
+
 const time = document.querySelector('.time');
 const dateLook = document.querySelector('.date');
 const optionsDate = {weekday: 'long', month: 'long', day: 'numeric'};
-const greeting = document.querySelector('.greeting');
 const nameGreting = document.querySelector('.name');
-const slidePrev = document.querySelector('.slide-prev');
-const slideNext = document.querySelector('.slide-next');
+const greeting = document.querySelector('.greeting');
 
 function showDate () {
     const date = new Date();
@@ -52,13 +52,19 @@ function getLocalStorage(key) {
     }
     return '';
 };
+
 window.addEventListener('load', () => nameGreting.value = getLocalStorage('name'));
 
-function getRandomNum(toNumber) {
-    return toNumber ? Number(String(Math.round(Math.random() * (21 - 1) + 1)).padStart(2, '0')) : String(Math.round(Math.random() * (21 - 1) + 1)).padStart(2, '0');
+//-----------------------slider---------------------------
+
+const slidePrev = document.querySelector('.slide-prev');
+const slideNext = document.querySelector('.slide-next');
+
+function getRandomNum(num) {
+    return Math.round(Math.random() * (num + 1 - 1) + 1)
 }
 
-let randomNum = getRandomNum(true);
+let randomNum = getRandomNum(20);
 
 function getSlideNext() {
     if (randomNum < 20) {
@@ -79,7 +85,7 @@ slidePrev.addEventListener('click', getSlidePrev);
 
 function setBg() {
     const timeOfDay = getTimeOfDay();
-    const bgNum = getRandomNum();
+    const bgNum = String(randomNum).padStart(2, '0');
     const img = new Image();
     img.src = `https://github.com/MarinaStepanchuk/stage1-tasks/blob/assets/images/${timeOfDay}/${bgNum}.jpg?raw=true` 
     img.onload = () => {      
@@ -88,6 +94,8 @@ function setBg() {
 };
 
 setBg();
+
+// ---------------weather-------------------
 
 const weatherIcon = document.querySelector('.weather-icon');
 const temperature = document.querySelector('.temperature');
@@ -101,7 +109,8 @@ async function getWeather() {
     const url = `https://api.openweathermap.org/data/2.5/weather?q=${city.value}&lang=ru&appid=6482b58158f95b17d9dce830a81efd17&units=metric`;
     const res = await fetch(url);
     const data = await res.json();
-    if (data.cod === '404') {
+    console.log(data)
+    if (data.cod === '404' || data.cod === '400') {
         weatherIcon.className = 'weather-icon owf'
         weatherError.textContent = `Error! city not found for '${city.value}'!`;
         temperature.textContent = '';
@@ -128,11 +137,19 @@ window.addEventListener('load', () => {
     getWeather();
 });
 
-// async function getQuotes() {  
-//     const quotes = 'data.json';
-//     const res = await fetch(quotes);
-//     const data = await res.json(); 
-//     console.log(data);
-//   }
+// ------------quotes--------------
 
-// getQuotes();
+function getRandomQuote() {
+
+}
+
+
+async function getQuotes() {  
+    const quotes = 'js/data.json';
+    const res = await fetch(quotes);
+    const data = await res.json(); 
+
+    console.log(data.length);
+}
+
+getQuotes();
