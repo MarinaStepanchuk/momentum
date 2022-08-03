@@ -40,18 +40,19 @@ function showDateTime () {
 
 showDateTime();
 
-function setLocalStorage() {
-    localStorage.setItem('name', nameGreting.value);
+function setLocalStorage(key, value) {
+    localStorage.setItem(key, value);
 }
 
-window.addEventListener('beforeunload', setLocalStorage);
+window.addEventListener('beforeunload', () => setLocalStorage('name', nameGreting.value));
 
-function getLocalStorage() {
-    if(localStorage.getItem('name')) {
-        nameGreting.value = localStorage.getItem('name');
+function getLocalStorage(key) {
+    if(localStorage.getItem(key)) {
+        return localStorage.getItem(key);
     }
+    return '';
 };
-window.addEventListener('load', getLocalStorage);
+window.addEventListener('load', () => nameGreting.value = getLocalStorage('name'));
 
 function getRandomNum(toNumber) {
     return toNumber ? Number(String(Math.round(Math.random() * (21 - 1) + 1)).padStart(2, '0')) : String(Math.round(Math.random() * (21 - 1) + 1)).padStart(2, '0');
@@ -78,7 +79,7 @@ slidePrev.addEventListener('click', getSlidePrev);
 
 function setBg() {
     const timeOfDay = getTimeOfDay();
-    const bgNum = String(randomNum).padStart(2, '0');
+    const bgNum = getRandomNum();
     const img = new Image();
     img.src = `https://github.com/MarinaStepanchuk/stage1-tasks/blob/assets/images/${timeOfDay}/${bgNum}.jpg?raw=true` 
     img.onload = () => {      
@@ -88,5 +89,50 @@ function setBg() {
 
 setBg();
 
+const weatherIcon = document.querySelector('.weather-icon');
+const temperature = document.querySelector('.temperature');
+const weatherDescription = document.querySelector('.weather-description');
+const wind = document.querySelector('.wind');
+const humidity = document.querySelector('.humidity');
+const city = document.querySelector('.city');
+const weatherError = document.querySelector('.weather-error')
 
+async function getWeather() {
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${city.value}&lang=ru&appid=6482b58158f95b17d9dce830a81efd17&units=metric`;
+    const res = await fetch(url);
+    const data = await res.json();
+    if (data.cod === '404') {
+        weatherIcon.className = 'weather-icon owf'
+        weatherError.textContent = `Error! city not found for '${city.value}'!`;
+        temperature.textContent = '';
+        weatherDescription.textContent = '';
+        wind.textContent = '';
+        humidity.textContent = '';
+    } else {
+        weatherIcon.className = 'weather-icon owf'
+        weatherIcon.classList.add(`owf-${data.weather[0].id}`);
+        temperature.textContent = `${Math.floor(data.main.temp)}°C`;
+        weatherDescription.textContent = data.weather[0].main;
+        wind.textContent = `Wind speed: ${Math.floor(data.wind.speed)} m/s`;
+        humidity.textContent = `Humidity: ${data.main.humidity}%`;
+        weatherError.textContent = '';
+    }
+};
 
+city.addEventListener('change',getWeather)
+
+window.addEventListener('beforeunload', () => setLocalStorage('city', city.value));
+
+window.addEventListener('load', () => {
+    city.value = getLocalStorage('city') || 'Minsk';
+    getWeather();
+});
+
+// async function getQuotes() {  
+//     const quotes = 'data.json';
+//     const res = await fetch(quotes);
+//     const data = await res.json(); 
+//     console.log(data);
+//   }
+
+// getQuotes();
