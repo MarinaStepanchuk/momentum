@@ -60,11 +60,13 @@ window.addEventListener('load', () => nameGreting.value = getLocalStorage('name'
 const slidePrev = document.querySelector('.slide-prev');
 const slideNext = document.querySelector('.slide-next');
 
-function getRandomNum(num) {
-    return Math.round(Math.random() * (num + 1 - 1) + 1)
+function getRandomNum(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min) + min)
 }
 
-let randomNum = getRandomNum(20);
+let randomNum = getRandomNum(1, 21);
 
 function getSlideNext() {
     if (randomNum < 20) {
@@ -147,9 +149,9 @@ async function getQuotes() {
     const quotes = 'js/data.json';
     const res = await fetch(quotes);
     const data = await res.json(); 
-    let numberQuote = getRandomNum(data.length - 2);
+    let numberQuote = getRandomNum(0, data.length);
     if (numberQuote === rep) { 
-        if (numberQuote < data.length) {
+        if (numberQuote < data.length-1) {
             numberQuote += 1;
         } else {
             numberQuote -= 1;
@@ -164,3 +166,61 @@ getQuotes();
 
 changeQuote.addEventListener('click', getQuotes)
 
+
+//---------------------audio player------------------
+
+import {playList} from './playList.js';
+
+const play = document.querySelector('.play');
+const playPrev = document.querySelector('.play-prev');
+const playNext = document.querySelector('.play-next')
+
+const audio = new Audio();
+let isPlay = false;
+
+let playNum = 0;
+
+function playAudio() {
+    audio.src = playList[playNum].src;
+    audio.currentTime = 0;
+    isPlay ? audio.pause() : audio.play();
+    isPlay = !isPlay
+    play.classList.toggle('pause')
+  };
+  
+  function playSwitch() {
+      audio.src = playList[playNum].src;
+      audio.currentTime = 0;
+      audio.play();
+      isPlay = true;
+      play.classList.add('pause')
+  };
+
+function playNextAudio() {
+    if (playNum < playList.length-1) {
+        playNum += 1;
+    } else {playNum = 0}
+    playSwitch()
+}
+
+function playPrevAudio() {
+    if (playNum > 0) {
+        playNum -= 1;
+    } else {playNum = playList.length-1}
+    playSwitch()
+}
+
+
+
+play.addEventListener('click', playAudio)
+playPrev.addEventListener('click', playPrevAudio);
+playNext.addEventListener('click', playNextAudio);
+
+
+
+
+
+
+
+
+// cityWeath.value = localStorage.getItem('city') ? localStorage.getItem('city') : 'Minsk';
