@@ -173,7 +173,17 @@ import {playList} from './playList.js';
 
 const play = document.querySelector('.play');
 const playPrev = document.querySelector('.play-prev');
-const playNext = document.querySelector('.play-next')
+const playNext = document.querySelector('.play-next');
+const playListContainer = document.querySelector('.play-list');
+
+playList.forEach(element => {
+    const li = document.createElement('li');
+    li.classList.add('play-item');
+    li.textContent = `${element.title}`;
+    playListContainer.append(li);
+});
+
+const playItem = document.querySelectorAll('.play-item');
 
 const audio = new Audio();
 let isPlay = false;
@@ -185,18 +195,21 @@ function playAudio() {
     audio.currentTime = 0;
     isPlay ? audio.pause() : audio.play();
     isPlay = !isPlay
-    play.classList.toggle('pause')
-  };
+    play.classList.toggle('pause');
+    playItem[playNum].classList.toggle('item-active');
+};
   
-  function playSwitch() {
-      audio.src = playList[playNum].src;
-      audio.currentTime = 0;
-      audio.play();
-      isPlay = true;
-      play.classList.add('pause')
-  };
+function playSwitch() {
+    audio.src = playList[playNum].src;
+    audio.currentTime = 0;
+    audio.play();
+    isPlay = true;
+    play.classList.add('pause')
+    playItem[playNum].classList.toggle('item-active');
+};
 
 function playNextAudio() {
+    playItem[playNum].classList.toggle('item-active')
     if (playNum < playList.length-1) {
         playNum += 1;
     } else {playNum = 0}
@@ -204,23 +217,15 @@ function playNextAudio() {
 }
 
 function playPrevAudio() {
+    playItem[playNum].classList.toggle('item-active')
     if (playNum > 0) {
         playNum -= 1;
     } else {playNum = playList.length-1}
     playSwitch()
 }
 
-
-
 play.addEventListener('click', playAudio)
 playPrev.addEventListener('click', playPrevAudio);
 playNext.addEventListener('click', playNextAudio);
+audio.addEventListener('ended', playNextAudio)
 
-
-
-
-
-
-
-
-// cityWeath.value = localStorage.getItem('city') ? localStorage.getItem('city') : 'Minsk';
