@@ -175,6 +175,8 @@ const play = document.querySelector('.play');
 const playPrev = document.querySelector('.play-prev');
 const playNext = document.querySelector('.play-next');
 const playListContainer = document.querySelector('.play-list');
+const soundTrack = document.querySelector('.sound-track')
+const duration = document.querySelectorAll('.duration')
 
 playList.forEach(element => {
     const li = document.createElement('li');
@@ -189,6 +191,9 @@ const audio = new Audio();
 let isPlay = false;
 
 let playNum = 0;
+soundTrack.textContent = `${playList[0].title}`;
+duration.textContent = `${playList[0].duration}`
+console.log(duration.textContent)
 
 function playAudio() {
     audio.src = playList[playNum].src;
@@ -198,6 +203,8 @@ function playAudio() {
     play.classList.toggle('pause');
     playItem[playNum].classList.toggle('item-active');
     playItem[playNum].classList.add('item-active-play');
+    soundTrack.textContent = `${playList[playNum].title}`;
+    // duration.textContent = `${playList[playNum].duration}`;
 };
   
 function playSwitch() {
@@ -207,7 +214,9 @@ function playSwitch() {
     isPlay = true;
     play.classList.add('pause');
     playItem[playNum].classList.add('item-active');
-    playItem[playNum].classList.add('item-active-play')
+    playItem[playNum].classList.add('item-active-play');
+    soundTrack.textContent = `${playList[playNum].title}`;
+    // duration.textContent = `${playList[playNum].duration}`;
 };
 
 function playNextAudio() {
@@ -234,7 +243,6 @@ playNext.addEventListener('click', playNextAudio);
 audio.addEventListener('ended', playNextAudio);
 
 playListContainer.addEventListener('click', (event,index) => {
-    console.log(event)
     if (event.target.className === 'play-item') {
         playItem[playNum].classList.remove('item-active');
         playItem[playNum].classList.remove('item-active-play');
@@ -242,22 +250,21 @@ playListContainer.addEventListener('click', (event,index) => {
             if(event.target.textContent === elem.title)
             playNum = index;
         })
-        audio.src = playList[playNum].src;
-        audio.play();
-        isPlay = true;
-        play.classList.add('pause');
-        playItem[playNum].classList.add('item-active');
-        playItem[playNum].classList.add('item-active-play');
+        playSwitch();
     } else if(event.target.className === 'play-item item-active-play' || 'play-item item-active item-active-play') {
         if(isPlay) {
             audio.pause();
             play.classList.toggle('pause');
             playItem[playNum].classList.remove('item-active');
+            soundTrack.textContent = `${playList[playNum].title}`;
+            // duration.textContent = `${playList[playNum].duration}`;
             isPlay = false;
         } else {
             audio.play();
             play.classList.toggle('pause');
             playItem[playNum].classList.add('item-active');
+            soundTrack.textContent = `${playList[playNum].title}`;
+            // duration.textContent = `${playList[playNum].duration}`;
             isPlay = true;
         }
     }

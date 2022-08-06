@@ -18,10 +18,5 @@ export const playList = [
         title: 'That Background Ambient',
         src: './assets/sounds/That-Background-Ambient.mp3',
         duration: '01:00'
-      },
-      {      
-        title: 'Where The Llight',
-        src: './assets/sounds/Where-The-Llight.mp3',
-        duration: '01:00'
       }
   ]
