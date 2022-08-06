@@ -197,6 +197,7 @@ function playAudio() {
     isPlay = !isPlay
     play.classList.toggle('pause');
     playItem[playNum].classList.toggle('item-active');
+    playItem[playNum].classList.add('item-active-play');
 };
   
 function playSwitch() {
@@ -204,28 +205,37 @@ function playSwitch() {
     audio.currentTime = 0;
     audio.play();
     isPlay = true;
-    play.classList.add('pause')
-    playItem[playNum].classList.toggle('item-active');
+    play.classList.add('pause');
+    playItem[playNum].classList.add('item-active');
+    playItem[playNum].classList.add('item-active-play')
 };
 
 function playNextAudio() {
-    playItem[playNum].classList.toggle('item-active')
+    playItem[playNum].classList.remove('item-active')
+    playItem[playNum].classList.remove('item-active-play')
     if (playNum < playList.length-1) {
         playNum += 1;
-    } else {playNum = 0}
-    playSwitch()
+    } else {playNum = 0};
+    playSwitch();
 }
 
 function playPrevAudio() {
-    playItem[playNum].classList.toggle('item-active')
+    playItem[playNum].classList.remove('item-active')
+    playItem[playNum].classList.remove('item-active-play')
     if (playNum > 0) {
         playNum -= 1;
-    } else {playNum = playList.length-1}
-    playSwitch()
+    } else {playNum = playList.length-1};
+    playSwitch();
 }
 
-play.addEventListener('click', playAudio)
+play.addEventListener('click', playAudio);
 playPrev.addEventListener('click', playPrevAudio);
 playNext.addEventListener('click', playNextAudio);
-audio.addEventListener('ended', playNextAudio)
+audio.addEventListener('ended', playNextAudio);
 
+// document.body.addEventListener('click', event => {
+//     console.log(event)
+//     if (event.target.className === 'play-item') {
+//         playAudio()
+//     }
+// })
