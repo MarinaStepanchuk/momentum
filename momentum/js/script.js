@@ -233,9 +233,32 @@ playPrev.addEventListener('click', playPrevAudio);
 playNext.addEventListener('click', playNextAudio);
 audio.addEventListener('ended', playNextAudio);
 
-// document.body.addEventListener('click', event => {
-//     console.log(event)
-//     if (event.target.className === 'play-item') {
-//         playAudio()
-//     }
-// })
+playListContainer.addEventListener('click', (event,index) => {
+    console.log(event)
+    if (event.target.className === 'play-item') {
+        playItem[playNum].classList.remove('item-active');
+        playItem[playNum].classList.remove('item-active-play');
+        playList.forEach((elem, index) => {
+            if(event.target.textContent === elem.title)
+            playNum = index;
+        })
+        audio.src = playList[playNum].src;
+        audio.play();
+        isPlay = true;
+        play.classList.add('pause');
+        playItem[playNum].classList.add('item-active');
+        playItem[playNum].classList.add('item-active-play');
+    } else if(event.target.className === 'play-item item-active-play' || 'play-item item-active item-active-play') {
+        if(isPlay) {
+            audio.pause();
+            play.classList.toggle('pause');
+            playItem[playNum].classList.remove('item-active');
+            isPlay = false;
+        } else {
+            audio.play();
+            play.classList.toggle('pause');
+            playItem[playNum].classList.add('item-active');
+            isPlay = true;
+        }
+    }
+})
