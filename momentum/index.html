@@ -11,13 +11,13 @@
 <body>
   <header class="header">
     <div class="player">
-      <div class="sound-track">hhh</div>
+      <div class="sound-track"></div>
       <div class="progress">
         <div class="timeline">
           <div class="duration-sound"></div>
         </div>
         <div class="player-time">
-          <div class="timer-play">00:00</div>
+          <div class="timer-play"></div>
           <div>/</div>
           <div class="duration"></div>
         </div>
@@ -30,13 +30,13 @@
         </div>
         <div class="player-volume">
           <button class="button-volume"></button>
-          <input type="range" class="sound-volume">
+          <input type="range" class="sound-volume" min="0" max="1" step="0.01">
         </div>
       </div>
       <ul class="play-list"></ul>
     </div>
     <div class="weather">
-      <input type="text" class="city" placeholder="[Enter sity]"/>
+      <input type="text" class="city"/>
       <i class="weather-icon owf"></i>
       <div class="weather-error"></div>
       <div class="description-container">
@@ -56,14 +56,81 @@
     <date class="date"></date>
     <div class="greeting-container">
       <span class="greeting"></span>
-      <input type="text" class="name" placeholder="[Enter name]"/>
+      <input type="text" class="name"/>
     </div>
   </main>
   <footer class="footer">
-    <button class="change-quote"></button>
-    <div>
-      <div class="quote"></div>
-      <div class="author"></div>
+    <div class="settings"></div>
+    <div class="footer-quote">
+      <button class="change-quote"></button>
+      <div>
+        <div class="quote"></div>
+        <div class="author"></div>
+      </div>
+    </div>
+    <div class="settings-menu">
+      <div class="language-container">
+        <div class="name-setting-language">language</div>
+        <div class="language-en">EN</div>
+        <input type="range" min="0" max="1" class="language-switch" value="0">
+        <div class="language-ru">RU</div>
+      </div>
+      <div class="source-image-container">
+        <p class="source-image-text">Image source:</p>
+        <div class="way-container">
+          <div class="way-column">
+            <label for="GitHub">GitHub</label>
+            <input type="radio" name="way" id="GitHub" class="way-check-image" checked>
+          </div>
+          <div class="way-column">
+            <label for="UnsplashAPI">Unsplash API</label>
+            <input type="radio" name="way" id="UnsplashAPI" class="way-check-image">
+          </div>
+          <div class="way-column">
+            <label for="FlickrAPI">Flickr API</label>
+            <input type="radio" name="way" id="FlickrAPI" class="way-check-image">
+          </div>
+        </div>
+      </div>
+      <div class="tag-container">
+        <label for="tag-name">Image theme</label>
+        <input type="text" name="tag-name" class="tag-input">
+      </div>
+      <div class="hide-block-container">
+        <p class="hide-block-text">Hide blocks</p>
+        <div class="blocks-hide">
+          <div class="block-container">
+            <input type="checkbox" id="time" class="way-check">
+            <label for="time" class="hide-time">Time</label>
+          </div>
+          <div class="block-container">
+            <input type="checkbox" id="date" class="way-check">
+            <label for="date" class="hide-date">Date</label>
+          </div>
+          <div class="block-container">
+            <input type="checkbox" id="greeting" class="way-check">
+            <label for="greeting" class="hide-greeting">Greeting</label>
+          </div>
+          <div class="block-container">
+            <input type="checkbox" id="quote" class="way-check">
+            <label for="quote" class="hide-quote">Quote</label>
+          </div>
+          <div class="block-container">
+            <input type="checkbox" id="wheather" class="way-check">
+            <label for="wheather" class="hide-wheather">Wheather</label>
+          </div>
+          <div class="block-container">
+            <input type="checkbox" id="player" class="way-check">
+            <label for="player" class="hide-player">Player</label>
+          </div>
+          <div class="block-container">
+            <input type="checkbox" id="todolist" class="way-check">
+            <label for="todolist" class="hide-todolist">ToDo List</label>
+          </div>
+        </div> 
+      </div>
+      <div>
+      </div>
     </div>
   </footer>
   <script type="module" src="js/script.js"></script>
