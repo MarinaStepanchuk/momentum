@@ -19,33 +19,10 @@ const hideQuote = document.querySelector('.hide-quote');
 const hideWheather = document.querySelector('.hide-wheather');
 const hidePlayer = document.querySelector('.hide-player');
 const hideTodolist = document.querySelector('.hide-todolist');
-
-// ---------- change language --------------------
+const tagChange = document.querySelector('.tag-change');
+const tagLabel = document.querySelector('.tag-label');
 
 let languageSelected = 'en';
-
-languageEn.addEventListener('click', () => {
-    languageSelected = 'en';
-    languageSwitch.value = '0'
-    getWeather();
-    getQuotes();
-    addText();
-});
-
-languageRu.addEventListener('click', () => {
-    languageSelected = 'ru';
-    languageSwitch.value = '1'
-    getWeather();
-    getQuotes();
-    addText();
-});
-
-languageSwitch.addEventListener('click', () => {
-    languageSwitch.value === '1' ? languageSelected = 'ru' : languageSelected = 'en';
-    getWeather();
-    getQuotes();
-    addText();
-});
 
 function addText() {
     nameSettingLanguage.textContent = library.nameSettingLanguage[languageSelected];
@@ -58,6 +35,8 @@ function addText() {
     hideWheather.textContent = library.hideWheather[languageSelected];
     hidePlayer.textContent = library.hidePlayer[languageSelected];
     hideTodolist.textContent = library.hideTodolist[languageSelected];
+    tagChange.textContent = library.tagChange[languageSelected];
+    tagLabel.textContent =  library.tagLabel[languageSelected];
 }
 
 addText()
@@ -114,14 +93,14 @@ function showDateTime () {
 showDateTime();
 
 function setLocalStorage(key, value) {
-    localStorage.setItem(key, value);
+    localStorage.setItem(key, JSON.stringify(value));
 }
 
 window.addEventListener('beforeunload', () => setLocalStorage('name', nameGreting.value));
 
 function getLocalStorage(key) {
     if(localStorage.getItem(key)) {
-        return localStorage.getItem(key);
+        return JSON.parse(localStorage.getItem(key));
     }
     return '';
 };
@@ -158,7 +137,7 @@ function getSlidePrev() {
 slideNext.addEventListener('click', getSlideNext);
 slidePrev.addEventListener('click', getSlidePrev);
 let tegBg = getTimeOfDayEn();
-let bgWay;
+let bgWay = 'GitHub';
 
 async function setBg() {
     let tegBgGit = getTimeOfDayEn();
@@ -169,9 +148,7 @@ async function setBg() {
         UnsplashAPI : getLinkToImageUnsplash(),
         FlickrAPI : getLinkToImageFlickr()
     }
-    //////*********** */
-    let imgWay = await urlBg.FlickrAPI;
-    //////*********** */
+    let imgWay = await urlBg[bgWay];
     img.src = `${imgWay}` 
     img.onload = () => {      
         document.body.style.backgroundImage = `url('${imgWay}')`
@@ -197,9 +174,12 @@ async function getLinkToImageFlickr() {
     const res = await fetch(url);
     const data = await res.json();
     const img = new Image();
-    let bgNum = getRandomNum(0, data.photos.photo.length);
-    console.log(data.photos.photo[bgNum].url_l)
-    return data.photos.photo[bgNum].url_l 
+    let bgNum = getRandomNum(0, (data.photos.photo.length-1));
+    if(data.photos.photo[bgNum].url_l) {
+        return data.photos.photo[bgNum].url_l 
+    } else {
+        getLinkToImageFlickr()
+    }
 }
 
 // ---------------weather-------------------
@@ -439,3 +419,208 @@ setInterval(() => {
       audio.currentTime
     );
 }, 500);
+
+// --------------- settings ----------------------
+
+// ---------- change language --------------------
+
+
+
+languageEn.addEventListener('click', () => {
+    languageSelected = 'en';
+    languageSwitch.value = '0'
+    getWeather();
+    getQuotes();
+    addText();
+});
+
+languageRu.addEventListener('click', () => {
+    languageSelected = 'ru';
+    languageSwitch.value = '1'
+    getWeather();
+    getQuotes();
+    addText();
+});
+
+languageSwitch.addEventListener('click', () => {
+    languageSwitch.value === '1' ? languageSelected = 'ru' : languageSelected = 'en';
+    getWeather();
+    getQuotes();
+    addText();
+});
+
+//----------------Image source---------------------
+
+const sourceGitHub = document.getElementById('GitHub');
+const sourceUnsplashAPI = document.getElementById('UnsplashAPI');
+const sourceFlickrAPI = document.getElementById('FlickrAPI');
+const tagInput = document.querySelector('.tag-input');
+
+tagInput.setAttribute("disabled", "true");
+
+sourceGitHub.addEventListener('click', () =>{
+    bgWay = 'GitHub';
+    tagInput.setAttribute("disabled", "true");
+    setBg();
+});
+
+sourceUnsplashAPI.addEventListener('click', () =>{
+    bgWay = 'UnsplashAPI';
+    tagInput.removeAttribute("disabled");
+    setBg();
+});
+
+sourceFlickrAPI.addEventListener('click', () =>{
+    bgWay = 'FlickrAPI';
+    tagInput.removeAttribute("disabled");
+    setBg();
+});
+
+tagChange.addEventListener('click', () => {
+    tegBg = tagInput.value;
+    setBg();
+});
+
+// -------------------Hide blocks--------------------
+
+const blockHide = document.querySelector('.blocks-hide');
+const player = document.querySelector('.player');
+const greetingContainer = document.querySelector('.greeting-container');
+const footerQuote = document.querySelector('.footer-quote');
+const weatherContainer = document.querySelector('.weather');
+//==============
+const todolistContainer = document.querySelector('todolist-container')
+//==============
+
+blockHide.addEventListener('click' , event => {
+    switch (event.target.id) {
+        case 'time':
+            if(document.querySelector(`#time`).checked){
+                time.classList.add('hide-block');
+            } else {
+                time.classList.remove('hide-block'); 
+            }
+            break;
+        case 'date':
+            if(document.querySelector(`#date`).checked){
+                dateLook.classList.add('hide-block');
+            } else {
+                dateLook.classList.remove('hide-block');
+            }
+            break;
+        case 'greeting':
+            if(document.querySelector(`#greeting`).checked){
+                greetingContainer.classList.add('hide-block');
+            } else {
+                greetingContainer.classList.remove('hide-block');
+            }
+            break;
+        case 'quote':
+            if(document.querySelector(`#quote`).checked){
+                footerQuote.classList.add('hide-block');
+            } else {
+                footerQuote.classList.remove('hide-block');
+            }
+            break;
+        case 'wheather':
+            if(document.querySelector(`#wheather`).checked){
+                weatherContainer.classList.add('hide-block');
+            } else {
+                weatherContainer.classList.remove('hide-block');
+            }
+            break;
+        case 'player':
+            if(document.querySelector(`#player`).checked){
+                player.classList.add('hide-block');
+            } else {
+                player.classList.remove('hide-block');
+            }
+            break;
+        case 'todolist':
+            if(document.querySelector(`#player`).checked) {
+                todolistContainer.classList.add('hide-block');
+            } else {
+                todolistContainer.classList.remove('hide-block');
+            }
+            break;
+    }
+});
+
+//-------------------show Menu Settings ---------------
+
+const settingsMenu = document.querySelector('.settings-menu');
+const closeMenu = document.querySelector('.close-menu');
+
+closeMenu.addEventListener('click', () => {
+    settingsMenu.classList.remove('menu-show');
+});
+
+document.addEventListener('click', event => {
+	if (!event.composedPath().includes(settingsMenu)) {
+        if(event.target.className === 'settings') {
+            settingsMenu.classList.add('menu-show');   
+        } else {
+            settingsMenu.classList.remove('menu-show');
+        }
+	}
+});
+
+//-------------------save settings-------------------
+
+window.addEventListener('beforeunload', () => setLocalStorage('language', {label: languageSelected, code: languageSwitch.value}));
+
+window.addEventListener('load', () => {
+    languageSelected = getLocalStorage('language').label;
+    languageSwitch.value = getLocalStorage('language').code;
+    getWeather();
+    getQuotes();
+    addText();
+});
+
+window.addEventListener('beforeunload', () => setLocalStorage('bg', {source: bgWay, tag: tagInput.value}));
+
+window.addEventListener('load', () => {
+    let imgSourse = getLocalStorage('bg').source;
+    document.querySelector(`#${imgSourse}`).setAttribute("checked", "true");
+    bgWay = getLocalStorage('bg').source;
+    tagInput.value = getLocalStorage('bg').tag
+    if(tagInput.value) {
+        tegBg = tagInput.value
+    };
+    if(bgWay !== 'GitHub') {
+        tagInput.removeAttribute("disabled");
+    } else {
+        tagInput.value = '';
+    }
+    setBg()
+});
+
+window.addEventListener('beforeunload', () =>  {
+    const nodeList = document.querySelectorAll('.hide-block');
+    const getId = [];
+    for (const node of nodeList) {
+        getId.push(node.className.split(' ')[0]);
+    }
+    let checkboxes = document.getElementsByClassName('way-check');
+    const getCheck = [];
+    for (const node of checkboxes) {
+        if(node.checked) {
+            getCheck.push(node.id);
+        }
+    }
+    setLocalStorage('hide',{block: getId, input: getCheck});
+});
+
+window.addEventListener('load', () => {
+    let arrayClass = getLocalStorage('hide').block;
+    arrayClass.forEach(elem => {
+        document.querySelector(`${elem}`).classList.add('hide-block');
+    });
+    let arrayId =  getLocalStorage('hide').input;
+    console.log(arrayId)
+    arrayId.forEach(elem => {
+        console.log(elem)
+        document.querySelector(`#${elem}`).setAttribute("checked", "checked");
+    });
+});
+

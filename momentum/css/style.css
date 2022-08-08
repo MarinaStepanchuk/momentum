@@ -37,6 +37,7 @@ body {
   justify-content: center;
   align-items: center;
   gap: 15px;
+  transition: opacity ease 1s;
 }
 
 .player-controls {
@@ -236,6 +237,7 @@ body {
   width: 180px;
   min-height: 180px;  
   text-align: left;
+  transition: opacity ease 1s;
 }
 
 .weather-error {
@@ -307,13 +309,16 @@ body {
   margin-bottom: 10px;
   font-family: 'Arial-MT';
   font-size: 100px;
-  letter-spacing: -4px;  
+  letter-spacing: -4px; 
+  transition: opacity ease 1s;
+  visibility: visible; 
 }
 
 .date {
   min-height: 28px;
   font-size: 24px;
   margin-bottom: 20px;
+  transition: opacity ease 1s;
 }
 
 .greeting-container {
@@ -324,6 +329,7 @@ body {
   min-height: 48px;
   width: 100vw;
   font-size: 40px;
+  transition: opacity ease 1s;
 }
 
 .greeting {
@@ -379,6 +385,7 @@ body {
   justify-content: flex-end;
   align-items: center;
   width: 100%;
+  transition: opacity ease 1s;
 }
 
 .change-quote {
@@ -432,19 +439,51 @@ body {
 }
 
 .settings-menu {
+  position: absolute;
+  left: -300px;
+  bottom: 20px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
   width: 300px;
   backdrop-filter: blur(30px);
-  position: absolute;
-  left: 20px;
-  bottom: 20px;
-  padding: 20px 20px 0px 20px;
-  gap: 15px;
+  padding: 45px 20px 0px 20px;
+  gap: 13px;
   border-radius: 20px;
   border: #C5B358 1px solid;
+  transition: all ease 1s;
+}
+
+.menu-show {
+  left: 20px;
+}
+
+.close-menu {
+  position: absolute; 
+  top: 12px; 
+  right: 30px;
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+  padding: 10px;
+}
+
+.close-menu::after,
+.close-menu::before {
+  position: absolute;
+  content: "";
+  width: 25px; 
+  height: 3px;
+  background-color: #fff;
+}
+
+.close-menu::before {
+  transform: rotate(-45deg);
+}
+
+.close-menu::after{
+  transform: rotate(45deg);
 }
 
 .source-image-container {
@@ -458,7 +497,6 @@ body {
 .source-image-text,
 .hide-block-text {
   font-size: 20px;
-  text-decoration: underline;
   color: #C5B358;
 }
 
@@ -513,12 +551,35 @@ body {
 }
 
 .tag-container {
+  width: 100%;
   display: flex;
+  align-items: center;
+  justify-content: center;
   gap: 10px;
 }
 
+.tag-label {
+  width: 91px;
+  
+}
+
 .tag-input {
-  width: 40%;
+  width: 37%;
+  height: 30px;
+}
+
+.tag-change {
+  width: 25%;
+  outline: none;
+  padding: 5px;
+  background-color: #C5B358;
+  border: #464543;
+  transition: all 0.4s;
+  cursor: pointer;
+}
+
+.tag-change:hover {
+  opacity: 0.7;
 }
 
 .hide-block-container {
@@ -551,6 +612,11 @@ body {
   -moz-appearance: none;
   appearance: none;
   outline: none;
+  cursor: pointer;
+}
+
+.hide-label {
+  cursor: pointer;
 }
 
 .way-check::before {
@@ -584,6 +650,16 @@ body {
    justify-content: center;
    align-items: center;
   visibility: visible;
+}
+
+.todolist-container {
+  transition: opacity ease 1s;
+}
+
+.hide-block {
+  opacity: 0;
+  transition: all ease 1s;
+  /* visibility: hidden; */
 }
 
 @media (max-width: 768px) {

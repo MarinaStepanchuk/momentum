@@ -68,7 +68,11 @@
         <div class="author"></div>
       </div>
     </div>
+    <div class="todolist-container">
+
+    </div>
     <div class="settings-menu">
+      <div class="close-menu"></div>
       <div class="language-container">
         <div class="name-setting-language">language</div>
         <div class="language-en">EN</div>
@@ -93,38 +97,39 @@
         </div>
       </div>
       <div class="tag-container">
-        <label for="tag-name">Image theme</label>
+        <label for="tag-name" class="tag-label">set a tag</label>
         <input type="text" name="tag-name" class="tag-input">
+        <input type="button" value="change" class="tag-change">
       </div>
       <div class="hide-block-container">
-        <p class="hide-block-text">Hide blocks</p>
+        <p class="hide-block-text">Hide blocks:</p>
         <div class="blocks-hide">
           <div class="block-container">
             <input type="checkbox" id="time" class="way-check">
-            <label for="time" class="hide-time">Time</label>
+            <label for="time" class="hide-label hide-time">Time</label>
           </div>
           <div class="block-container">
             <input type="checkbox" id="date" class="way-check">
-            <label for="date" class="hide-date">Date</label>
+            <label for="date" class="hide-label hide-date">Date</label>
           </div>
           <div class="block-container">
             <input type="checkbox" id="greeting" class="way-check">
-            <label for="greeting" class="hide-greeting">Greeting</label>
+            <label for="greeting" class="hide-label hide-greeting">Greeting</label>
           </div>
           <div class="block-container">
             <input type="checkbox" id="quote" class="way-check">
-            <label for="quote" class="hide-quote">Quote</label>
+            <label for="quote" class="hide-label hide-quote">Quote</label>
           </div>
           <div class="block-container">
             <input type="checkbox" id="wheather" class="way-check">
-            <label for="wheather" class="hide-wheather">Wheather</label>
+            <label for="wheather" class="hide-label hide-wheather">Wheather</label>
           </div>
           <div class="block-container">
             <input type="checkbox" id="player" class="way-check">
-            <label for="player" class="hide-player">Player</label>
+            <label for="player" class="hide-label hide-player">Player</label>
           </div>
           <div class="block-container">
-            <input type="checkbox" id="todolist" class="way-check">
+            <input type="checkbox" id="todolist" class="hide-label way-check">
             <label for="todolist" class="hide-todolist">ToDo List</label>
           </div>
         </div> 
