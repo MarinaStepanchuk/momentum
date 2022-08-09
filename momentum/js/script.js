@@ -1,5 +1,5 @@
-import {library} from './playList.js';
-import {playList} from './playList.js';
+import {library} from './list.js';
+import {playList} from './list.js';
 
 const time = document.querySelector('.time');
 const dateLook = document.querySelector('.date');

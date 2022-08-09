@@ -2,22 +2,22 @@ export const playList = [
     {      
       title: 'Cry Me A River',
       src: './assets/sounds/Cry-Me-A-River.mp3',
-      duration: '01:00'
+      duration: '01:21'
     },  
     {      
       title: 'More Chill',
       src: './assets/sounds/More-Chill.mp3',
-      duration: '01:00'
+      duration: '00:47'
     },
     {      
-        title: 'Story Main',
-        src: './assets/sounds/Story-Main.mp3',
-        duration: '01:00'
-      },
-      {      
         title: 'That Background Ambient',
         src: './assets/sounds/That-Background-Ambient.mp3',
         duration: '01:00'
+      },
+      {      
+        title: 'Where The Light',
+        src: './assets/sounds/Where-The-Light.mp3',
+        duration: '00:58'
       }
   ]
 
