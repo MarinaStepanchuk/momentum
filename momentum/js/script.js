@@ -21,6 +21,11 @@ const hidePlayer = document.querySelector('.hide-player');
 const hideTodolist = document.querySelector('.hide-todolist');
 const tagChange = document.querySelector('.tag-change');
 const tagLabel = document.querySelector('.tag-label');
+const titleSettings = document.querySelector('.settings-title');
+const titleTodolist = document.querySelector('.todolist-title');
+const addTaskBtn = document.querySelector('.add-task-btn');
+const taskDiscription = document.querySelector('.task-discription');
+const titleList = document.querySelector('.title-list');
 
 let languageSelected = 'en';
 
@@ -37,6 +42,11 @@ function addText() {
     hideTodolist.textContent = library.hideTodolist[languageSelected];
     tagChange.textContent = library.tagChange[languageSelected];
     tagLabel.textContent =  library.tagLabel[languageSelected];
+    titleSettings.textContent =  library.titleSettings[languageSelected];
+    titleTodolist.textContent =  library.titleTodolist[languageSelected];
+    addTaskBtn.textContent = library.addTaskBtn[languageSelected];
+    taskDiscription.placeholder = `${library.taskDiscription[languageSelected]}`;
+    titleList.textContent =  library.titleList[languageSelected];
 }
 
 addText()
@@ -488,9 +498,8 @@ const player = document.querySelector('.player');
 const greetingContainer = document.querySelector('.greeting-container');
 const footerQuote = document.querySelector('.footer-quote');
 const weatherContainer = document.querySelector('.weather');
-//==============
-const todolistContainer = document.querySelector('todolist-container')
-//==============
+const todolistContainer = document.querySelector('.todolist-container')
+const todolistButton = document.querySelector('.todolist-icon');
 
 blockHide.addEventListener('click' , event => {
     switch (event.target.id) {
@@ -537,10 +546,12 @@ blockHide.addEventListener('click' , event => {
             }
             break;
         case 'todolist':
-            if(document.querySelector(`#player`).checked) {
+            if(document.querySelector(`#todolist`).checked) {
                 todolistContainer.classList.add('hide-block');
+                todolistButton.classList.add('hide-block');
             } else {
                 todolistContainer.classList.remove('hide-block');
+                todolistButton.classList.remove('hide-block');
             }
             break;
     }
@@ -622,5 +633,19 @@ window.addEventListener('load', () => {
         console.log(elem)
         document.querySelector(`#${elem}`).setAttribute("checked", "checked");
     });
+});
+
+//------------------toDoList---------------------
+
+const todolistClose = document.querySelector('.close-todo-list');
+
+todolistButton.addEventListener('click', () => {
+    console.log(1)
+    todolistContainer.classList.add('todolist-show');
+});
+
+todolistClose.addEventListener('click', () => {
+    console.log(2)
+    todolistContainer.classList.remove('todolist-show');
 });
 

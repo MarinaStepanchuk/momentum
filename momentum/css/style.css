@@ -19,6 +19,7 @@ body {
   background: url("../assets/img/bg.jpg") center/cover, rgba(0, 0, 0, 0.5);
   background-blend-mode: multiply;
   transition: background-image 1s ease-in-out;
+  overflow-x: hidden;
 }
 
 .header {
@@ -43,7 +44,7 @@ body {
 .player-controls {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   width: 120px;
 }
 
@@ -364,17 +365,18 @@ body {
   height: 25vh;
   min-height: 160px;  
   padding: 20px;
+  gap: 5%;
+  margin-bottom: 20px;
 }
 
 .settings {
-  width: 50px;
+  width: 10%;
   height: 50px;
   background-image: url("../assets/svg/gear.svg");
   background-size: 40px 40px;
   background-position: center center;
   background-repeat: no-repeat;
   background-color: transparent;
-  margin-left: 20px;
   margin-bottom: 20px;
   cursor: pointer;
 }
@@ -384,7 +386,7 @@ body {
   flex-direction: column;
   justify-content: flex-end;
   align-items: center;
-  width: 100%;
+  width: 70%;
   transition: opacity ease 1s;
 }
 
@@ -448,11 +450,16 @@ body {
   align-items: center;
   width: 300px;
   backdrop-filter: blur(30px);
-  padding: 45px 20px 0px 20px;
+  padding: 10px 20px 0px 20px;
   gap: 13px;
   border-radius: 20px;
   border: #C5B358 1px solid;
-  transition: all ease 1s;
+  transition: all linear 1s;
+}
+
+.settings-title {
+  font-size: 25px;
+  color: #C5B358;
 }
 
 .menu-show {
@@ -566,12 +573,14 @@ body {
 .tag-input {
   width: 37%;
   height: 30px;
+  padding-left: 5px;
 }
 
 .tag-change {
   width: 25%;
   outline: none;
   padding: 5px;
+  border-radius: 5px;
   background-color: #C5B358;
   border: #464543;
   transition: all 0.4s;
@@ -653,13 +662,231 @@ body {
 }
 
 .todolist-container {
-  transition: opacity ease 1s;
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 450px;
+  backdrop-filter: blur(30px);
+  padding: 10px 20px 10px 20px;
+  gap: 13px;
+  border-radius: 20px;
+  border: #C5B358 1px solid;
+  transition: all linear 0.5s;
+  overflow: hidden;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.todolist-show {
+  opacity: 1;
+  right: 20px;
+  visibility: inherit;
+}
+
+.todolist-icon {
+  width: 10%;
+  height: 60px;
+  background-image: url("../assets/svg/task-list.svg");
+  background-size: 50px 60px;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-color: transparent;
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+
+.close-todo-list {
+  position: absolute; 
+  top: 12px; 
+  right: 30px;
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+  padding: 10px;
+}
+
+.close-todo-list::after,
+.close-todo-list::before {
+  position: absolute;
+  content: "";
+  width: 25px; 
+  height: 3px;
+  background-color: #fff;
+}
+
+.close-todo-list::before {
+  transform: rotate(-45deg);
+}
+
+.close-todo-list::after{
+  transform: rotate(45deg);
+}
+
+.todolist-title {
+  font-size: 25px;
+  color: #C5B358;
+}
+
+.title-list {
+  font-size: 18px;
+}
+
+.todo-wrapper {
+  width: 100%;
+  display: flex; 
+  justify-content: center; 
+  align-items: center;
+  gap: 5%;
+}
+
+.task-discription {
+  width: 65%;
+  height: calc(2rem + 2px);
+  color: #535353;
+  padding-left: 5px;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  margin: 0;
+  border: none;
+  border-radius: 5px;
+}
+
+.task-discription::placeholder {
+  padding: 0px 5px;
+  color: #212529;
+  opacity: 0.4;
+}
+
+.task-discription:focus {
+  color: #212529;
+  background-color: #fff;
+  border-color: C5B358;
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgb(197, 179, 88);
+}
+
+.add-task-btn {
+  width: 30%;
+  height: calc(2rem + 2px);
+  background-color: #C5B358;
+  outline: none;
+  border-radius: 5px;
+  border: #464543;
+  transition: all 0.4s;
+}
+
+.add-task-btn:hover {
+  opacity: 0.7;
+}
+
+.todo-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding-bottom: 10px;
+  user-select: none;
+}
+
+.task-wrapper {
+  position: relative;
+  display: flex;
+  width: 93%;
+  color: #535353;
+  align-items: center;
+  background-color: #fff;
+  padding: 7px 7px 7px 10px;
+  box-sizing: border-box;
+  gap: 10px;
+  transition: all ease 0.4s;
+  border-radius: 5px;
+}
+
+.task-done {
+  background-color: rgb(138, 133, 133);
+}
+
+.text-task {
+  text-align: left;
+  display: inline-flex;
+  align-items: center;
+  user-select: none;
+  cursor: pointer;
+}
+
+.btn-complete-task {
+  width: 25px;
+  height: 25px;
+  margin-left: 5px;
+  position: absolute;
+  z-index: -1;
+  opacity: 0;
+}
+
+.text-task::before {
+  content: '';
+  display: inline-block;
+  width: 25px;
+  height: 25px;
+  flex-shrink: 0;
+  flex-grow: 0;
+  border: 1px solid #adb5bd;
+  border-radius: 0.25em;
+  margin-right: 0.5em;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 50% 50%;
+}
+
+.text-task::before {
+  border-color: #babcbe;
+  background-color: #babcbe;
+}
+
+.btn-complete-task:disabled+.text-task::before {
+  background-color: #babcbe;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%23fff' d='M6.564.75l-3.59 3.612-1.538-1.55L0 4.26 2.974 7.25 8 2.193z'/%3e%3c/svg%3e");
+}
+
+.btn-complete-task:not(:disabled):not(:checked)+.text-task:hover::before {
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%23fff' d='M6.564.75l-3.59 3.612-1.538-1.55L0 4.26 2.974 7.25 8 2.193z'/%3e%3c/svg%3e");
+}
+
+.btn-complete-task:checked+.text-task::before {
+  border-color: #C5B358;
+  background-color: #C5B358;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%23fff' d='M6.564.75l-3.59 3.612-1.538-1.55L0 4.26 2.974 7.25 8 2.193z'/%3e%3c/svg%3e");
+}
+
+.btn-delete-task {
+  width: 7%;
+  height: calc(2rem + 2px);
+  outline: none;
+  border: #464543;
+  transition: all 0.4s;
+  background-size: 22px 35px;
+  background-image: url("../assets/svg/task-delete-y.svg");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.btn-delete-task:hover {
+  background-image: url("../assets/svg/task-delete.svg");
 }
 
 .hide-block {
   opacity: 0;
   transition: all ease 1s;
-  /* visibility: hidden; */
+  visibility: hidden;
 }
 
 @media (max-width: 768px) {
@@ -681,4 +908,10 @@ body {
     font-size: 32px;
     padding: 5px;
   }
+}
+
+@media (max-width: 600px) {
+  .todolist-container {
+    width: 80%;
+  } 
 }

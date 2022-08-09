@@ -45,4 +45,9 @@ export const library = {
   hideTodolist: {en: 'ToDo List', ru: 'Список дел'},
   tagChange: {en: 'change', ru: 'сменить'},
   tagLabel: {en: 'set a tag', ru: 'задайте тег'},
+  titleSettings: {en: 'Settings', ru: 'Настройки'},
+  titleTodolist: {en: 'ToDoList', ru: 'Список дел'},
+  addTaskBtn: {en: 'Add', ru: 'Добавить'},
+  taskDiscription: {en: 'Add your new todo', ru: 'Добавьте задачу'},
+  titleList: {en: 'My list:', ru: 'Мой список:'},
 }
