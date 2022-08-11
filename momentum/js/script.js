@@ -582,7 +582,6 @@ window.addEventListener('load', () => {
     languageSwitch.value = getLocalStorage('language').code || '0' ;
     city.value = getLocalStorage('city') || (languageSelected === 'en') ? 'Minsk' : 'Минск';
     getWeather();
-    getWeather();
     getQuotes();
     addText();
     let imgSourse = getLocalStorage('bg').source;
