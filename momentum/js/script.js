@@ -580,7 +580,14 @@ window.addEventListener('load', () => {
     nameGreting.value = getLocalStorage('name');
     languageSelected = getLocalStorage('language').label || 'en';
     languageSwitch.value = getLocalStorage('language').code || '0' ;
-    city.value = getLocalStorage('city') || (languageSelected === 'en') ? 'Minsk' : 'Минск';
+
+    if(getLocalStorage('city')) {
+        city.value = getLocalStorage('city');
+    } else if(languageSelected === 'en') {
+        city.value =  'Minsk'
+    } else {
+        city.value =  'Минск'
+    }
     getWeather();
     getQuotes();
     addText();
