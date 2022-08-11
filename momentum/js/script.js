@@ -577,7 +577,7 @@ window.addEventListener('beforeunload', () =>  {
 window.addEventListener('load', () => {
     nameGreting.value = getLocalStorage('name');
     languageSelected = getLocalStorage('language').label;
-    languageSwitch.value = getLocalStorage('language').code;
+    languageSwitch.value = getLocalStorage('language').code || '0' ;
     city.value = getLocalStorage('city') || (languageSelected === 'en') ? 'Minsk' : 'Минск';
     getWeather();
     getWeather();
@@ -597,15 +597,11 @@ window.addEventListener('load', () => {
     };
     setBg();
     let arrayClass = getLocalStorage('hide').block;
-    console.log(arrayClass)
     arrayClass.forEach(elem => {
-        console.log(document.querySelector(`${elem}`))
         document.querySelector(`.${elem}`).classList.add('hide-block');
     });
     let arrayId =  getLocalStorage('hide').input;
-    console.log(arrayId)
     arrayId.forEach(elem => {
-        console.log(elem)
         document.querySelector(`#${elem}`).setAttribute("checked", "checked");
     });
 });
