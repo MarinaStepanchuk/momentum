@@ -578,7 +578,7 @@ window.addEventListener('beforeunload', () =>  {
 
 window.addEventListener('load', () => {
     nameGreting.value = getLocalStorage('name');
-    languageSelected = getLocalStorage('language').label;
+    languageSelected = getLocalStorage('language').label || 'en';
     languageSwitch.value = getLocalStorage('language').code || '0' ;
     city.value = getLocalStorage('city') || (languageSelected === 'en') ? 'Minsk' : 'Минск';
     getWeather();
