@@ -49,14 +49,14 @@ function addText() {
     titleList.textContent =  library.titleList[languageSelected];
 }
 
-addText()
+addText();
 
 // -------------------date, greeting------------------------------
 
 function showDate () {
     const date = new Date();
     dateLook.textContent = languageSelected === 'ru' ? date.toLocaleDateString('ru-RU', optionsDate): date.toLocaleDateString('en-US', optionsDate);
-}
+};
 
 function getTimeOfDayEn() {
     const date = new Date();
@@ -70,7 +70,7 @@ function getTimeOfDayEn() {
     } else if (hours < 24) {
         return 'evening'
     }
-}
+};
 
 function getTimeOfDay() {
     const date = new Date();
@@ -84,38 +84,23 @@ function getTimeOfDay() {
     } else if (hours < 24) {
         return library.evening[languageSelected]
     }
-}
+};
 
 function showGreeting() {
     const timeOfDay = getTimeOfDay();
     nameGreting.placeholder = `${library.greetingPlace[languageSelected]}`;
     greeting.textContent = `${library.greeting[languageSelected]}${timeOfDay}`;
-}
+};
 
 function showDateTime () {
     const date = new Date();
     time.textContent = date.toLocaleTimeString();
-    showDate()
-    showGreeting()
+    showDate();
+    showGreeting();
     setTimeout(showDateTime, 1000);
 };
 
 showDateTime();
-
-function setLocalStorage(key, value) {
-    localStorage.setItem(key, JSON.stringify(value));
-}
-
-window.addEventListener('beforeunload', () => setLocalStorage('name', nameGreting.value));
-
-function getLocalStorage(key) {
-    if(localStorage.getItem(key)) {
-        return JSON.parse(localStorage.getItem(key));
-    }
-    return '';
-};
-
-window.addEventListener('load', () => nameGreting.value = getLocalStorage('name'));
 
 //-----------------------slider---------------------------
 
@@ -126,7 +111,7 @@ function getRandomNum(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min) + min)
-}
+};
 
 let randomNum = getRandomNum(1, 21);
 
@@ -135,14 +120,14 @@ function getSlideNext() {
         randomNum += 1;
     } else {randomNum = 1}
     setBg();
-}
+};
 
 function getSlidePrev() {
     if (randomNum > 1) {
         randomNum -= 1;
     } else {randomNum = 20}
     setBg();
-}
+};
 
 slideNext.addEventListener('click', getSlideNext);
 slidePrev.addEventListener('click', getSlidePrev);
@@ -165,7 +150,7 @@ async function setBg() {
     }; 
 };
 
-setBg()
+setBg();
 
 // ----------------------picture Unsplash API --------------------
 
@@ -175,7 +160,7 @@ async function getLinkToImageUnsplash() {
     const data = await res.json();
     const img = new Image();
     return data.urls.regular 
-}
+};
 
 // ----------------------picture Flickr API --------------------
 
@@ -188,9 +173,9 @@ async function getLinkToImageFlickr() {
     if(data.photos.photo[bgNum].url_l) {
         return data.photos.photo[bgNum].url_l 
     } else {
-        getLinkToImageFlickr()
+        getLinkToImageFlickr();
     }
-}
+};
 
 // ---------------weather-------------------
 
@@ -222,17 +207,10 @@ async function getWeather() {
         wind.textContent = `${library.wind[languageSelected]}: ${Math.floor(data.wind.speed)} ${library.windUnits[languageSelected]}`;
         humidity.textContent = `${library.humidity[languageSelected]}: ${data.main.humidity}%`;
         weatherError.textContent = '';
-    }
+    };
 };
 
-city.addEventListener('change',getWeather)
-
-window.addEventListener('beforeunload', () => setLocalStorage('city', city.value));
-
-window.addEventListener('load', () => {
-    city.value = getLocalStorage('city') || 'Minsk';
-    getWeather();
-});
+city.addEventListener('change',getWeather);
 
 // ------------quotes--------------
 
@@ -253,18 +231,17 @@ async function getQuotes(change) {
                 numberQuote += 1;
             } else {
                 numberQuote -= 1;
-            }
-        }
-    }
+            };
+        };
+    };
     quote.textContent = `"${data[numberQuote].text}"`;
     author.textContent = data[numberQuote].author;
     rep = numberQuote;
-}
+};
 
 getQuotes(true);
 
-changeQuote.addEventListener('click', () => getQuotes(true))
-
+changeQuote.addEventListener('click', () => getQuotes(true));
 
 //---------------------audio player------------------
 
@@ -298,20 +275,20 @@ volumeSlider.value = Number(audio.volume);
 
 volumeSlider.addEventListener('click', e => {
     volumeSlider.value === '0' ? buttonVolume.classList.add('button-volume-off') :  buttonVolume.classList.remove('button-volume-off');
-    audio.volume = volumeSlider.value
+    audio.volume = volumeSlider.value;
 })
 
 function playAudio() {
-    let stopPoint = audio.currentTime
+    let stopPoint = audio.currentTime;
     audio.src = playList[playNum].src;
     if(isPlay) {
         audio.currentTime = stopPoint;
-        audio.pause()
-     } else {
+        audio.pause();
+    } else {
         audio.currentTime = stopPoint;
         audio.play();
-     } 
-    isPlay = !isPlay
+    } 
+    isPlay = !isPlay;
     play.classList.toggle('pause');
     playItem[playNum].classList.toggle('item-active');
     playItem[playNum].classList.add('item-active-play');
@@ -331,22 +308,22 @@ function playSwitch() {
 };
 
 function playNextAudio() {
-    playItem[playNum].classList.remove('item-active')
-    playItem[playNum].classList.remove('item-active-play')
+    playItem[playNum].classList.remove('item-active');
+    playItem[playNum].classList.remove('item-active-play');
     if (playNum < playList.length-1) {
         playNum += 1;
     } else {playNum = 0};
     playSwitch();
-}
+};
 
 function playPrevAudio() {
-    playItem[playNum].classList.remove('item-active')
-    playItem[playNum].classList.remove('item-active-play')
+    playItem[playNum].classList.remove('item-active');
+    playItem[playNum].classList.remove('item-active-play');
     if (playNum > 0) {
         playNum -= 1;
     } else {playNum = playList.length-1};
     playSwitch();
-}
+};
 
 let pointVolume;
 
@@ -364,8 +341,8 @@ buttonVolume.addEventListener('click', () => {
         buttonVolume.classList.remove('button-volume-off');
         volumeSlider.value = pointVolume;
         audio.volume = volumeSlider.value;
-    }
-})
+    };
+});
 
 playListContainer.addEventListener('click', (event,index) => {
     if (event.target.className === 'play-item') {
@@ -391,8 +368,8 @@ playListContainer.addEventListener('click', (event,index) => {
             soundTrack.textContent = `${playList[playNum].title}`;
             duration.textContent = `${playList[playNum].duration}`;
             isPlay = true;
-        }
-    }
+        };
+    };
 });
 
 function getTimeCodeFromNum(num) {
@@ -401,56 +378,47 @@ function getTimeCodeFromNum(num) {
     seconds -= minutes * 60;
     const hours = parseInt(minutes / 60);
     minutes -= hours * 60;
-  
     if (hours === 0) return `${minutes}:${String(seconds % 60).padStart(2, 0)}`;
     return `${String(hours).padStart(2, 0)}:${minutes}:${String(
       seconds % 60
     ).padStart(2, 0)}`;
-}
+};
 
 function getSecond(dur) {
-    let second = Number(dur.substr(0,1))*10*60+Number(dur.substr(1,1))*60+Number(dur.substr(3,1))*10+Number(dur.substr(4,1))
+    let second = Number(dur.substr(0,1))*10*60+Number(dur.substr(1,1))*60+Number(dur.substr(3,1))*10+Number(dur.substr(4,1));
     return second;
-}
+};
 
 timeline.addEventListener('click', e => {
     const timelineWidth = window.getComputedStyle(timeline).width;
-    const durSound = getSecond(playList[playNum].duration)
+    const durSound = getSecond(playList[playNum].duration);
     const timeToSeek = e.offsetX / parseInt(timelineWidth) * durSound;
     audio.currentTime = timeToSeek;
 });
 
 setInterval(() => {
     const progressBar = document.querySelector('.duration-sound');
-    const durSound = getSecond(playList[playNum].duration)
+    const durSound = getSecond(playList[playNum].duration);
     progressBar.style.width = audio.currentTime / durSound * 100 + "%";
     const timerPlay = document.querySelector('.timer-play');
-    timerPlay.textContent = getTimeCodeFromNum(
-      audio.currentTime
-    );
+    timerPlay.textContent = getTimeCodeFromNum(audio.currentTime);
 }, 500);
 
 // --------------- settings ----------------------
 
 // ---------- change language --------------------
 
-
-
-languageEn.addEventListener('click', () => {
-    languageSelected = 'en';
-    languageSwitch.value = '0'
+const chengeLang = (lg) => {
+    languageSelected = lg;
+    languageSwitch.value = lg === 'en' ? '0' : '1';
     getWeather();
     getQuotes();
     addText();
-});
+};
 
-languageRu.addEventListener('click', () => {
-    languageSelected = 'ru';
-    languageSwitch.value = '1'
-    getWeather();
-    getQuotes();
-    addText();
-});
+languageEn.addEventListener('click', () => chengeLang('en'));
+
+languageRu.addEventListener('click', () => chengeLang('ru'));
 
 languageSwitch.addEventListener('click', () => {
     languageSwitch.value === '1' ? languageSelected = 'ru' : languageSelected = 'en';
@@ -498,22 +466,7 @@ const player = document.querySelector('.player');
 const greetingContainer = document.querySelector('.greeting-container');
 const footerQuote = document.querySelector('.footer-quote');
 const weatherContainer = document.querySelector('.weather');
-const todolistContainer = document.querySelector('.todolist-container')
-const todolistButton = document.querySelector('.todolist-icon');
-
-// let hideBloks;
-// if(!localStorage.hide) {
-//     hideBloks =[];
-// } else {
-//     hideBloks = JSON.parse(localStorage.getItem('hide'));
-// }
-
-// let listHideBlocks =[];
-
-// function Block(id) {
-//     this.id = id;
-//     this.complete = false;
-// }
+const todoWrapperAll = document.querySelector('.todo-wrapper-all');
 
 blockHide.addEventListener('click' , event => {
     switch (event.target.id) {
@@ -561,14 +514,12 @@ blockHide.addEventListener('click' , event => {
             break;
         case 'todolist':
             if(document.querySelector(`#todolist`).checked) {
-                todolistContainer.classList.add('hide-block');
-                todolistButton.classList.add('hide-block');
+                todoWrapperAll.classList.add('hide-block');
             } else {
-                todolistContainer.classList.remove('hide-block');
-                todolistButton.classList.remove('hide-block');
+                todoWrapperAll.classList.remove('hide-block');
             }
             break;
-    }
+    };
 });
 
 //-------------------show Menu Settings ---------------
@@ -592,19 +543,46 @@ document.addEventListener('click', event => {
 
 //-------------------save settings-------------------
 
-window.addEventListener('beforeunload', () => setLocalStorage('language', {label: languageSelected, code: languageSwitch.value}));
+function setLocalStorage(key, value) {
+    localStorage.setItem(key, JSON.stringify(value));
+};
+
+function getLocalStorage(key) {
+    if(localStorage.getItem(key)) {
+        return JSON.parse(localStorage.getItem(key));
+    }
+    return '';
+};
+
+window.addEventListener('beforeunload', () =>  {
+    setLocalStorage('name', nameGreting.value);
+    setLocalStorage('city', city.value);
+    setLocalStorage('language', {label: languageSelected, code: languageSwitch.value});
+    setLocalStorage('bg', {source: bgWay, tag: tagInput.value});
+    const nodeList = document.querySelectorAll('.hide-block');
+    const getId = [];
+    for (const node of nodeList) {
+        getId.push(node.className.split(' ')[0]);
+    };
+    let checkboxes = document.getElementsByClassName('way-check');
+    const getCheck = [];
+    for (const node of checkboxes) {
+        if(node.checked) {
+            getCheck.push(node.id);
+        };
+    };
+    setLocalStorage('hide',{block: getId, input: getCheck});
+});
 
 window.addEventListener('load', () => {
+    nameGreting.value = getLocalStorage('name');
     languageSelected = getLocalStorage('language').label;
     languageSwitch.value = getLocalStorage('language').code;
+    city.value = getLocalStorage('city') || (languageSelected === 'en') ? 'Minsk' : 'Минск';
+    getWeather();
     getWeather();
     getQuotes();
     addText();
-});
-
-window.addEventListener('beforeunload', () => setLocalStorage('bg', {source: bgWay, tag: tagInput.value}));
-
-window.addEventListener('load', () => {
     let imgSourse = getLocalStorage('bg').source;
     document.querySelector(`#${imgSourse}`).setAttribute("checked", "true");
     bgWay = getLocalStorage('bg').source;
@@ -616,42 +594,27 @@ window.addEventListener('load', () => {
         tagInput.removeAttribute("disabled");
     } else {
         tagInput.value = '';
-    }
-    setBg()
+    };
+    setBg();
+    let arrayClass = getLocalStorage('hide').block;
+    console.log(arrayClass)
+    arrayClass.forEach(elem => {
+        console.log(document.querySelector(`${elem}`))
+        document.querySelector(`.${elem}`).classList.add('hide-block');
+    });
+    let arrayId =  getLocalStorage('hide').input;
+    console.log(arrayId)
+    arrayId.forEach(elem => {
+        console.log(elem)
+        document.querySelector(`#${elem}`).setAttribute("checked", "checked");
+    });
 });
-
-// window.addEventListener('beforeunload', () =>  {
-//     const nodeList = document.querySelectorAll('.hide-block');
-//     const getId = [];
-//     for (const node of nodeList) {
-//         getId.push(node.className.split(' ')[0]);
-//     }
-//     let checkboxes = document.getElementsByClassName('way-check');
-//     const getCheck = [];
-//     for (const node of checkboxes) {
-//         if(node.checked) {
-//             getCheck.push(node.id);
-//         }
-//     }
-//     setLocalStorage('hide',{block: getId, input: getCheck});
-// });
-
-// window.addEventListener('load', () => {
-//     let arrayClass = getLocalStorage('hide').block;
-//     arrayClass.forEach(elem => {
-//         document.querySelector(`${elem}`).classList.add('hide-block');
-//     });
-//     let arrayId =  getLocalStorage('hide').input;
-//     console.log(arrayId)
-//     arrayId.forEach(elem => {
-//         console.log(elem)
-//         document.querySelector(`#${elem}`).setAttribute("checked", "checked");
-//     });
-// });
 
 //------------------toDoList---------------------
 
 const todolistClose = document.querySelector('.close-todo-list');
+const todolistButton = document.querySelector('.todolist-icon');
+const todolistContainer = document.querySelector('.todolist-container')
 
 todolistButton.addEventListener('click', () => {
     todolistContainer.classList.add('todolist-show');
@@ -663,7 +626,7 @@ todolistClose.addEventListener('click', () => {
 
 const deskTaskInput = document.querySelector('.task-discription');
 const todosWrapper = document.querySelector('.todo-wrapper');
-const addTask = document.querySelector('.add-task-btn')
+const addTask = document.querySelector('.add-task-btn');
 
 let tasks;
 if(!localStorage.tasks) {
@@ -687,7 +650,7 @@ const createTemplate = (task, index) => {
             <button id="${index}" class="btn-delete-task"></button>
         </div>
     `
-}
+};
 
 const filterTask = () => {
     const activeTasks = tasks.length && tasks.filter(item => item.completed === false);
@@ -703,20 +666,20 @@ const fillHtmlListTodo = () => {
             todosWrapper.innerHTML += createTemplate(item, index);
         });
         todoItemElems = document.querySelectorAll('.todo-item');
-    }
+    };
     const checkboxesInputs = document.querySelectorAll('.btn-complete-task');
     for (let i = 0; i < checkboxesInputs.length; i++) {
         checkboxesInputs[i].addEventListener('click', event => {
             completeTask(Number(event.target.id));
         })
-    }
+    };
     const btnDeleteTask = document.querySelectorAll('.btn-delete-task');
     for (let i = 0; i < btnDeleteTask.length; i++) {
         btnDeleteTask[i].addEventListener('click', event => {
             deleteTask(Number(event.target.id));
         })
-    }
-}
+    };
+};
 
 fillHtmlListTodo();
 
