@@ -592,7 +592,7 @@ window.addEventListener('load', () => {
     getQuotes();
     addText();
     let imgSourse = getLocalStorage('bg').source;
-    document.querySelector(`#${imgSourse}`).setAttribute("checked", "true");
+    document.querySelector(`#${imgSourse}`).setAttribute("checked", "checked");
     bgWay = getLocalStorage('bg').source;
     tagInput.value = getLocalStorage('bg').tag
     if(tagInput.value) {
