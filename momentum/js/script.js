@@ -578,8 +578,18 @@ window.addEventListener('beforeunload', () =>  {
 
 window.addEventListener('load', () => {
     nameGreting.value = getLocalStorage('name');
-    languageSelected = getLocalStorage('language').label || 'en';
-    languageSwitch.value = getLocalStorage('language').code || '0' ;
+    if(getLocalStorage('language').label) {
+        languageSelected = getLocalStorage('language').label;
+    } else {
+        languageSelected = 'en';
+    }
+    // languageSelected = getLocalStorage('language').label || 'en';
+    if(getLocalStorage('language').code) {
+        languageSwitch.value = getLocalStorage('language').code;
+    } else {
+        languageSwitch.value = '0' ;
+    }
+    // languageSwitch.value = getLocalStorage('language').code || '0' ;
 
     if(getLocalStorage('city')) {
         city.value = getLocalStorage('city');
