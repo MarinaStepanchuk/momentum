@@ -602,7 +602,7 @@ window.addEventListener('load', () => {
     getQuotes();
     addText();
     let imgSourse = getLocalStorage('bg').source;
-    document.querySelector(`#${imgSourse}`).setAttribute("checked", "");
+    document.querySelector(`#${imgSourse}`).checked = true;
     bgWay = getLocalStorage('bg').source;
     tagInput.value = getLocalStorage('bg').tag
     if(tagInput.value) {
@@ -620,7 +620,7 @@ window.addEventListener('load', () => {
     });
     let arrayId =  getLocalStorage('hide').input;
     arrayId.forEach(elem => {
-        document.querySelector(`#${elem}`).setAttribute("checked", "checked");
+        document.querySelector(`#${elem}`).checked = true;
     });
 });
 
