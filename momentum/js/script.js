@@ -5,7 +5,7 @@ import {playList} from './list.js';
 
 const time = document.querySelector('.time');
 const dateLook = document.querySelector('.date');
-const optionsDate = {weekday: 'long', month: 'long', day: 'numeric'};
+const optionsDate = {weekday: 'long', month: 'long', day: 'numeric', timeZone: 'UTC'};
 const nameGreting = document.querySelector('.name');
 const greeting = document.querySelector('.greeting');
 const languageEn = document.querySelector('.language-en');
@@ -96,7 +96,13 @@ function showGreeting() {
 
 function showDateTime () {
     const date = new Date();
-    time.textContent = date.toLocaleTimeString();
+    let hours = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
+    let minutes =
+      date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
+    let second =
+      date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
+  
+    time.textContent = `${hours}:${minutes}:${second}`;
     showDate();
     showGreeting();
     setTimeout(showDateTime, 1000);

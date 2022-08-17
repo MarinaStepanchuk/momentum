@@ -452,7 +452,7 @@ body {
   padding: 10px 20px 0px 20px;
   gap: 13px;
   border-radius: 20px;
-  border: #C5B358 1px solid;
+  /* border: #C5B358 1px solid; */
   transition: all linear 1s;
 }
 
@@ -680,7 +680,7 @@ body {
   padding: 10px 20px 10px 20px;
   gap: 13px;
   border-radius: 20px;
-  border: #C5B358 1px solid;
+  /* border: #C5B358 1px solid; */
   transition: all linear 0.5s;
   opacity: 0;
   visibility: hidden;
